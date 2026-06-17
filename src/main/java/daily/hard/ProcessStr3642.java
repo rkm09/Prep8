@@ -114,4 +114,13 @@ The problem states that if k is outside the valid index range of result, we shou
 we first simulate only its length, denoted by len.
 If k+1>len after processing the entire string, then the requested position does not exist, and we can immediately return '.'.
 Otherwise, we traverse the string s from right to left and reverse each operation. During this process, we maintain the invariant k+1≤len.
+
+Visualizing 1-Based Indexing vs 0-Based Indexing
+The easiest way to understand why the editorial uses k + 1 and len + 1 is that they are temporarily converting 0-based indices into 1-based lengths to avoid integer division traps.
+k + 1 turns your 0-based target index into its 1-based position (e.g., index 3 becomes the "4th element").
+(len + 1) / 2 calculates the exact size of the first half, rounding up for odd numbers.
+By doing 1-based position > size of first half, the code creates a foolproof mathematical blanket that works perfectly for both even and odd numbers without needing separate if/else logic blocks!
+
+In the forward pass, # always makes the string even because len *= 2.
+However, in the backward pass, we are also handling * (which adds 1 to len). If a backspace happened right after a duplication, the integer division math during the reverse engineering process can temporarily create an odd len.
 */
