@@ -106,10 +106,12 @@ The length of result after processing s will not exceed 10^15.
 In this version, the length of the string s can be up to 10^5, and the length of result can reach 10^15.
 We are also asked to find the k-th character of result.
 Therefore, it is impossible to explicitly construct result and then query its k-th character.
+Since directly simulating the construction of result is infeasible, we need a different perspective.
+
 Instead of trying to determine which character ends up at position k in the final string,
 we can work backward and determine which position in an earlier state of result corresponds to the final position k.
 The problem states that if k is outside the valid index range of result, we should return '.'. Since the final length of result is not known in advance,
 we first simulate only its length, denoted by len.
 If k+1>len after processing the entire string, then the requested position does not exist, and we can immediately return '.'.
-Otherwise, we traverse the string s from right to left and reverse each operation. During this process, we maintain the invariant k+1≤len. 
+Otherwise, we traverse the string s from right to left and reverse each operation. During this process, we maintain the invariant k+1≤len.
 */

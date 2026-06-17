@@ -94,3 +94,20 @@ Constraints:
 1 <= s.length <= 20
 s consists of only lowercase English letters and special characters *, #, and %.
  */
+
+/*
+During the simulation process, appending a character and deleting the last character both take O(1) time.
+However, the '#' operation requires copying the entire current result, and the '%' operation requires traversing the entire result to reverse it.
+Therefore, the time spent on these operations is proportional to the current length of the result.
+In the worst case, the length of the result can grow to 2^n, so the overall time complexity is O(2^n).
+
+Let's look at the actual cost (number of character copies) at every single step for s = "a#######" where $n = 5$:
+Step 1 ('a'): Cost = $1$
+Step 2 ('#'): Cost = $1$ (copies "a" to make "aa")
+Step 3 ('#'): Cost = $2$ (copies "aa" to make "aaaa")
+Step 4 ('#'): Cost = $4$ (copies "aaaa" to make "aaaaaaaa")
+Step 5 ('#'): Cost = $8$ (copies 8 chars to make 16)
+
+1 + 2 + 4 + 8 ...2^(n - 1) = sum to GP = 2^n - 1 ~ O(2 ^ n).
+a = 1, r = 2, n. a (r^n - 1) / (r - 1).
+ */
