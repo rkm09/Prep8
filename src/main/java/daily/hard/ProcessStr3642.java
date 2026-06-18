@@ -123,4 +123,11 @@ By doing 1-based position > size of first half, the code creates a foolproof mat
 
 In the forward pass, # always makes the string even because len *= 2.
 However, in the backward pass, we are also handling * (which adds 1 to len). If a backspace happened right after a duplication, the integer division math during the reverse engineering process can temporarily create an odd len.
+
+Parallels in Code
+Look at how beautifully your brain linked these two concepts:
+Problem                   The Naive Math (Fails).                 The Defensive Computer Math (Succeeds)
+Binary Search Midpoint.     (left + right) / 2          left + (right - left) / 2 (Prevents Overflow) [left + right] >>> 1
+String Midpoint Tracking.    k >= len / 2               (k + 1) > (len + 1) / 2 (Prevents Truncation)
+
 */
