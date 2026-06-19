@@ -6,7 +6,7 @@ public class AngleClock1344 {
     }
 
     public static double angleClock(int hour, int minutes) {
-
+        return 0.0;
     }
 }
 
