@@ -100,4 +100,7 @@ Max Peak = max(H1, H2) + extra_height
     = dist / 2 + (2 * H1 - H1 + H2) / 2
     = dist / 2 + (H1 + H2) / 2
     = (H1 + H2 + dist) / 2    // notice it magically becomes taller height agnostic
+Why this works intuitively:
+You add the two heights together, add the entire distance between them (as if they could both climb the whole way),
+and divide by 2 to find the exact intersection point of their $45^\circ$ slopes.
  */
