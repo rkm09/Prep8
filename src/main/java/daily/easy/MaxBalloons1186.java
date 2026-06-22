@@ -12,6 +12,29 @@ public class MaxBalloons1186 {
 
     public static int maxNumberOfBalloons(String text) {
         String target = "balloon";
+        int count = Integer.MAX_VALUE;
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c : text.toCharArray()) {
+            if (target.contains(c + ""))
+                map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        if (map.size() != 5) return 0;
+
+        for (var entry : map.entrySet()) {
+            char c = entry.getKey();
+            int val = entry.getValue();
+            if (c == 'l' || c == 'o')
+                val /= 2;
+            if (val == 0) return 0;
+            count = Math.min(count, val);
+        }
+
+        return count;
+    }
+
+    public static int maxNumberOfBalloons1(String text) {
+        String target = "balloon";
         Map<Character, Integer> map = new HashMap<>();
         for (char c : text.toCharArray())
             map.put(c, map.getOrDefault(c, 0) + 1);
