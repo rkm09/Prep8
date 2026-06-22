@@ -10,7 +10,31 @@ public class MaxBalloons1186 {
         System.out.println(maxNumberOfBalloons(text1));
     }
 
+//    frequency array; fastest; time: O(n), space: O(1)
     public static int maxNumberOfBalloons(String text) {
+        int count = Integer.MAX_VALUE;
+        int[] freq = new int[26];
+        for (char c : text.toCharArray())
+            freq[c - 'a']++;
+        for (int i = 0; i < 26; i++) {
+            char c = (char) (i + 'a');
+            if (c == 'l' || c == 'o')
+                freq[i] /= 2;
+        }
+
+        for (int i = 0; i < 26; i++) {
+            char c = (char) (i + 'a');
+            if (c == 'l' || c == 'o' || c == 'b' || c == 'a' || c == 'n') {
+                if (freq[i] == 0) return 0;
+                count = Math.min (count, freq[i]);
+            }
+        }
+
+        return count;
+    }
+
+//    slow because of hashmap and string.contains
+    public static int maxNumberOfBalloons1(String text) {
         String target = "balloon";
         int count = Integer.MAX_VALUE;
         Map<Character, Integer> map = new HashMap<>();
@@ -33,7 +57,7 @@ public class MaxBalloons1186 {
         return count;
     }
 
-    public static int maxNumberOfBalloons1(String text) {
+    public static int maxNumberOfBalloons2(String text) {
         String target = "balloon";
         Map<Character, Integer> map = new HashMap<>();
         for (char c : text.toCharArray())
