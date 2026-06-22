@@ -18,13 +18,8 @@ public class MaxBalloons1186 {
             freq[c - 'a']++;
         for (int i = 0; i < 26; i++) {
             char c = (char) (i + 'a');
-            if (c == 'l' || c == 'o')
-                freq[i] /= 2;
-        }
-
-        for (int i = 0; i < 26; i++) {
-            char c = (char) (i + 'a');
             if (c == 'l' || c == 'o' || c == 'b' || c == 'a' || c == 'n') {
+                if (c == 'l' || c == 'o') freq[i] /= 2;
                 if (freq[i] == 0) return 0;
                 count = Math.min (count, freq[i]);
             }
