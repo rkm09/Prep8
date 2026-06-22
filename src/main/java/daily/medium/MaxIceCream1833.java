@@ -10,24 +10,25 @@ public class MaxIceCream1833 {
 
     public static int maxIceCream(int[] costs, int coins) {
         int max = 0, n = costs.length, min = -1;
+//        find both min and max to get the exact range
         for (int cost : costs) {
             max = Math.max(max, cost);
             min = Math.min(min, cost);
         }
+//        if coins are less than min, return
+        if (coins < min) return 0;
 
-        if(coins < min) return 0;
-
-        int[] freq = new int[max + 1];
+        int range = max - min + 1;
+        int[] freq = new int[range];
         for (int cost : costs)
-            freq[cost]++;
+            freq[cost - min]++;
 
         int[] sorted = new int[n];
         int idx = 0;
-        for (int i = 1; i < freq.length; i++) {
-            if(freq[i] == 0) continue;
-            int cnt = freq[i];
-            while (cnt-- > 0)
-                sorted[idx++] = i;
+        for (int i = 0; i < range; i++) {
+            while (freq[i]-- > 0) {
+                sorted[idx++] = i + min;
+            }
         }
 
         int res = 0;
