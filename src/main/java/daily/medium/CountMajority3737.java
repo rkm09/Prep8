@@ -58,3 +58,20 @@ elements. Therefore, when cnt>0, the number of occurrences of target is greater 
 which means target appears more than half the length of the subarray.
 Hence, target is the majority element of the subarray, and we increment the answer by 1.
  */
+
+/*
+impl MajoritySubarray {
+    pub fn count_majority_subarrays(nums: Vec<i32>, target: i32) -> i32 {
+        let n = nums.len();
+        let mut ans = 0;
+        for i in 0..n {
+            let mut count = 0;
+            for j in i..n {
+                count += if nums[j] == target { 1 } else { -1 };
+                if count > 0 { ans += 1;}
+            }
+        }
+        ans
+    }
+}
+ */
