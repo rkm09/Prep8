@@ -13,7 +13,7 @@ public class MaxSafeness2812 {
     }
 
     public static int maximumSafenessFactor(List<List<Integer>> grid) {
-
+        return 0;
     }
 }
 
