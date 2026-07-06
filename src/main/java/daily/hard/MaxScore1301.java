@@ -21,7 +21,7 @@ public class MaxScore1301 {
         int[][] dirs = {{-1,0}, {0,-1}, {-1,-1}};
 //        process cells
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j <n; j++) {
+            for (int j = 0; j < n; j++) {
                 char c = board.get(i).charAt(j);
 //                skip if first cell (already processed) or invalid cell
                 if ((i == 0 && j == 0) || c == 'X')
