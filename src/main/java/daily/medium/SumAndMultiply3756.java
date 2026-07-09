@@ -37,6 +37,7 @@ public class SumAndMultiply3756 {
             int l = query[0], r = query[1] + 1;
             long sum = prefSum[r] - prefSum[l];
             int len = prefCnt[r] - prefCnt[l];
+//            ((A - B) + MOD) % MOD, to avoid negative overflow without modifying value
             long val = (prefX[r] - ((prefX[l] * pow10[len]) % MOD) + MOD) % MOD;
             res[i++] = (int) ((sum * val) % MOD);
         }
@@ -91,9 +92,14 @@ Therefore, the answer is 987654321 * 45 = 44444444445.
 We return 44444444445 modulo (109 + 7) = 444444137.
 
 Constraints:
-1 <= m == s.length <= 105
+1 <= m == s.length <= 10^5
 s consists of digits only.
-1 <= queries.length <= 105
+1 <= queries.length <= 10^5
 queries[i] = [li, ri]
 0 <= li <= ri < m
+ */
+
+/*
+Because (prefX[l] * pow10[len]) % MOD can evaluate to any integer between 0 and MOD - 1, and prefX[r] can also evaluate to any integer between 0 and MOD - 1, their scaled modular representations are completely independent in terms of standard < or > operators.
+Whenever the wrapped remainder of the isolated left prefix happens to land on a higher spot on the modular wheel than the wrapped remainder of the right prefix, prefX[r] - (...) drops below zero. That's why the + MOD defense is mandatory.
  */
