@@ -179,7 +179,7 @@ The total number of unique paths from the start to the destination is:$$\text{To
 any base raised to a fraction of $n$ (like $2^{n/3}$) still represents exponential growth, which falls under the asymptotic umbrella of $O(2^n)$.
 
 For 80% of problems, thinking "DFS for reachability/structure" and "BFS/Dijkstra for metrics/shortest paths" will get
-you through.But there are absolutely deeper grooves to this pattern. When you transition into advanced graph engineering,
+you through. But there are absolutely deeper grooves to this pattern. When you transition into advanced graph engineering,
 the choice between DFS and BFS isn't just about what you are looking for, but the shape of the graph and the physics of memory.
 Here are the hidden grooves that alter the strategy.
 
@@ -195,14 +195,14 @@ about the shortest path.
 Groove 2: Memory Topology (Stack vs. Queue)
 The choice between DFS and BFS is often dictated by your memory constraints,
 because they use completely different data structures under the hood.DFS uses a Stack ($O(\text{Max Depth})$ space): It only cares about the current
-path it is exploring.BFS uses a Queue ($O(\text{Max Width})$ space): It has to hold the entire "frontier" of the current layer in memory.If you are dealing with a wide,
+path it is exploring. BFS uses a Queue ($O(\text{Max Width})$ space): It has to hold the entire "frontier" of the current layer in memory.If you are dealing with a wide,
 shallow graph (like a social network where one user has 10,000 friends, and they each have 10,000 friends), BFS will explode your memory usage because the queue has to hold
-millions of nodes at layer 2. DFS thrives here because the stack depth is tiny.Conversely, if the graph is a narrow, deeply nested spine, DFS will throw a StackOverflowError,
+millions of nodes at layer 2. DFS thrives here because the stack depth is tiny. Conversely, if the graph is a narrow, deeply nested spine, DFS will throw a StackOverflowError,
 while BFS will elegantly process it using almost no memory.
 
 Groove 3: State Space Search (Implicit Graphs)
 Sometimes the graph isn't a collection of nodes you built in an adjacency list;
-it's a puzzle. For example, "Change the word COLD to WARM by changing one letter at a time."Each word is a node, and changing a letter is an edge.
-If you want to find any sequence, DFS works.But in these problems, you almost always want the fewest steps. Because every edge has an implicit
+It's a puzzle. For example, "Change the word COLD to WARM by changing one letter at a time."Each word is a node, and changing a letter is an edge.
+If you want to find any sequence, DFS works. But in these problems, you almost always want the fewest steps. Because every edge has an implicit
 weight of 1, BFS acts as an optimization algorithm, guaranteeing that the first time you hit the target word, you found it in the minimum possible moves.
  */
