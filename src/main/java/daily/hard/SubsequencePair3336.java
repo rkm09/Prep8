@@ -1,14 +1,57 @@
 package daily.hard;
 
 public class SubsequencePair3336 {
-    private static int MOD = 1_000_000_007;
+    private static final int MOD = 1_000_000_007;
     public static void main(String[] args) {
         int[] nums = {1,2,3,4};
         System.out.println(subsequencePairCount(nums));
     }
 
+//    dp; time: O(N.M^2logM), space: O(N.M^2)
     public static int subsequencePairCount(int[] nums) {
-        return 0;
+        int max = 0;
+        for (int num : nums)
+            max = Math.max(max, num);
+        int[][] dp = new int[max + 1][max + 1];
+//        base case: both sequences are empty
+        dp[0][0] = 1;
+        for (int num : nums) {
+//            allocate a temporary next-state dp array to avoid operating on dirty data
+            int[][] nextDp = new int[max + 1][max + 1];
+            for (int i = 0; i <= max; i++) {
+                for (int j = 0; j <= max; j++) {
+//                    unreachable state; not part of nums
+                    if (dp[i][j] == 0)
+                        continue;
+                    long currentWays = dp[i][j];
+//                    option 1: do not include num in either seq1 or seq2
+                    nextDp[i][j] = (int) ((nextDp[i][j] + currentWays) % MOD);
+//                    option 2: include num in seq1
+                    int nextGcd1 = gcd(i, num);
+                    nextDp[nextGcd1][j] = (int) ((nextDp[nextGcd1][j] + currentWays) % MOD);
+//                    option 3: include num inm se2
+                    int nextGcd2 = gcd(j, num);
+                    nextDp[i][nextGcd2] = (int) ((nextDp[i][nextGcd2] + currentWays) % MOD);
+                }
+            }
+            dp = nextDp;
+        }
+
+//        accumulate the answers where both non-empty sequences share the same gcd;
+        int totalPairs = 0;
+        for (int g = 1; g <= max; g++)
+            totalPairs = (totalPairs + dp[g][g]) % MOD;
+
+        return totalPairs;
+    }
+
+    private static int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = a;
+            a = b;
+            b = temp % b;
+        }
+        return a;
     }
 }
 
