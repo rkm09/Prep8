@@ -1,5 +1,7 @@
 package daily.hard;
 
+import java.util.Arrays;
+
 public class SubsequencePair3336 {
     private static final int MOD = 1_000_000_007;
     public static void main(String[] args) {
@@ -35,6 +37,9 @@ public class SubsequencePair3336 {
                 }
             }
             dp = nextDp;
+            for (int[] ar : dp)
+                System.out.println(Arrays.toString(ar));
+            System.out.println("------------");
         }
 
 //        accumulate the answers where both non-empty sequences share the same gcd;
