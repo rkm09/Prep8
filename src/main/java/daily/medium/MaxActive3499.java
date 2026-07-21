@@ -1,13 +1,37 @@
 package daily.medium;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MaxActive3499 {
     public static void main(String[] args) {
-        String s = "0100";
+        String s = "0101";
         System.out.println(maxActiveSectionsAfterTrade(s));
     }
 
+//    greedy; time: O(n), space: O(n)
     public static int maxActiveSectionsAfterTrade(String s) {
-        return 0;
+        int n = s.length(), cnt1 = 0;
+        for (char c : s.toCharArray())
+            if (c == '1') cnt1++;
+        List<Integer> zeroBlocks = new ArrayList<>();
+        int i = 0;
+        while (i < n) {
+            int start = i;
+            while (i < n && s.charAt(start) == s.charAt(i))
+                i++;
+            if (s.charAt(start) == '0')
+                zeroBlocks.add(i - start);
+        }
+        int m = zeroBlocks.size();
+        if (m < 2)
+            return cnt1;
+        int bestGain = 0;
+        for (int j = 0; j < m - 1; j++ )
+            bestGain = Math.max(bestGain, (zeroBlocks.get(j) + zeroBlocks.get(j + 1)));
+
+
+        return bestGain + cnt1;
     }
 }
 
