@@ -1,6 +1,8 @@
 package daily.medium;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class SmallestSubSeq1081 {
@@ -9,14 +11,9 @@ public class SmallestSubSeq1081 {
         System.out.println(smallestSubsequence(s));
     }
 
-//    sliding window;
+
     public static String smallestSubsequence(String s) {
         int n = s.length();
-        Set<Character> set = new HashSet<>();
-        for (int i = 0; i < n; i++)
-            set.add(s.charAt(i));
-
-        
         return "";
     }
 }
