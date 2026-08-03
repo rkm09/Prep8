@@ -6,6 +6,7 @@ public class StoneGame877 {
         System.out.println(stoneGame(piles));
     }
 
+//    dp; time: O(n^2), space: O(n^2)
     public static boolean stoneGame(int[] piles) {
         int n = piles.length;
         Integer[][] memo = new Integer[n][n];
@@ -22,6 +23,11 @@ public class StoneGame877 {
         memo[i][j] = Math.max(leftPick, rightPick);
 
         return memo[i][j];
+    }
+
+//    maths; time: O(1)
+    public static boolean stoneGame1(int[] piles) {
+        return true;
     }
 }
 
@@ -48,4 +54,10 @@ Constraints:
 piles.length is even.
 1 <= piles[i] <= 500
 sum(piles[i]) is odd.
+ */
+
+
+/*
+Even length causes one side as even index and one side as odd index always. so the first person can calculate, even index
+sum and odd index sum and whichever is greater can stick to always picking that.
  */
