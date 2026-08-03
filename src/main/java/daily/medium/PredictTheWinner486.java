@@ -13,10 +13,7 @@ public class PredictTheWinner486 {
         int n = nums.length;
 //        memo[i][j] stores the max relative score advantage for subarray [i..j]
         Integer[][] memo = new Integer[n][n];
-        boolean k = maxDiff(nums, 0, n - 1, memo) >= 0;
-        for (var m : memo)
-            System.out.println(Arrays.toString(m));
-        return k;
+        return maxDiff(nums, 0, n - 1, memo) >= 0;
     }
 
     private static int maxDiff(int[] nums, int i, int j, Integer[][] memo) {
