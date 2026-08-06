@@ -10,7 +10,82 @@ public class RemoveMethods3310 {
 //        System.out.println(remainingMethods(4, 1, invocations));
     }
 
+//    optimized dfs;
     public static List<Integer> remainingMethods(int n, int k, int[][] invocations) {
+        List<List<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i < n; i++)
+            adjList.add(new ArrayList<>());
+        for (int[] invocation : invocations) {
+            int u = invocation[0];
+            int v = invocation[1];
+            adjList.get(u).add(v);
+        }
+        boolean[] isSuspicious = new boolean[n];
+        dfs(adjList, k, isSuspicious);
+
+        List<Integer> res = new ArrayList<>();
+        boolean canRemove = true;
+        for (int[] inv : invocations) {
+            if (!isSuspicious[inv[0]] && isSuspicious[inv[1]]) {
+                canRemove = false; break;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (!isSuspicious[i] || !canRemove)
+                res.add(i);
+        }
+        return res;
+    }
+
+    private static void dfs(List<List<Integer>> adjList, int curr, boolean[] isSuspicious) {
+        isSuspicious[curr] = true;
+        for (int neighbour : adjList.get(curr)) {
+            if (!isSuspicious[neighbour])
+                dfs(adjList, neighbour, isSuspicious);
+        }
+    }
+
+//    bfs
+    public static List<Integer> remainingMethods1(int n, int k, int[][] invocations) {
+        List<List<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i < n; i++)
+            adjList.add(new ArrayList<>());
+        for (int[] invocation : invocations) {
+            int u = invocation[0];
+            int v = invocation[1];
+            adjList.get(u).add(v);
+        }
+        boolean[] isSuspicious = new boolean[n];
+        Deque<Integer> queue = new ArrayDeque<>();
+        isSuspicious[k] = true;
+        queue.offer(k);
+
+        while (!queue.isEmpty()) {
+            int curr = queue.poll();
+            for (int neighbour : adjList.get(curr)) {
+                if (!isSuspicious[neighbour]) {
+                    isSuspicious[neighbour] = true;
+                    queue.offer(neighbour);
+                }
+            }
+        }
+
+        List<Integer> res = new ArrayList<>();
+        boolean canRemove = true;
+        for (int[] inv : invocations) {
+            if (!isSuspicious[inv[0]] && isSuspicious[inv[1]]) {
+                canRemove = false; break;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (!isSuspicious[i] || !canRemove)
+                res.add(i);
+        }
+        return res;
+    }
+
+//    dfs;
+    public static List<Integer> remainingMethods2(int n, int k, int[][] invocations) {
         List<List<Integer>> adjList = new ArrayList<>();
         int[] inDegree = new int[n];
         for (int i = 0; i < n; i++)
@@ -22,7 +97,7 @@ public class RemoveMethods3310 {
             inDegree[v]++;
         }
         boolean[] suspicious = new boolean[n];
-        dfs(adjList, inDegree, k, suspicious);
+        dfs1(adjList, inDegree, k, suspicious);
 
         List<Integer> res = new ArrayList<>();
         boolean canRemove = true;
@@ -39,14 +114,14 @@ public class RemoveMethods3310 {
         return res;
     }
 
-    private static void dfs (List<List<Integer>> adjList, int[] inDegree, int k, boolean[] suspicious) {
+    private static void dfs1 (List<List<Integer>> adjList, int[] inDegree, int k, boolean[] suspicious) {
         if (suspicious[k])
             return;
 
         suspicious[k] = true;
         for (int neighbour : adjList.get(k)) {
             inDegree[neighbour]--;
-            dfs(adjList, inDegree, neighbour, suspicious);
+            dfs1(adjList, inDegree, neighbour, suspicious);
         }
     }
 }
