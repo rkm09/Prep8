@@ -5,7 +5,28 @@ public class SmallestNumber3345 {
         System.out.println(smallestNumber(10,2));
     }
 
+
     public static int smallestNumber(int n, int t) {
+        while (!isDivisible(n, t))
+            n++;
+
+        return n;
+    }
+
+    private static boolean isDivisible(int num, int t) {
+        int product = 1;
+        while (num > 0) {
+            product *= num % 10;
+            num /= 10;
+            if (product == 0)
+                break;
+        }
+
+        return product % t == 0;
+    }
+
+
+    public static int smallestNumber1(int n, int t) {
         int len = (int) Math.log10(n) + 1;
         while (len < 2 && n % t != 0) {
             n++;
