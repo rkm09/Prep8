@@ -21,30 +21,29 @@ public class RemoveMethods3310 {
             adjList.get(u).add(v);
             inDegree[v]++;
         }
-        Set<Integer> suspicious = new HashSet<>();
+        boolean[] suspicious = new boolean[n];
         dfs(adjList, inDegree, k, suspicious);
 
         List<Integer> res = new ArrayList<>();
         boolean canRemove = true;
         for (int i = 0; i < n; i++) {
-            if (suspicious.contains(i) && inDegree[i] > 0) {
+            if (suspicious[i] && inDegree[i] > 0) {
                 canRemove = false; break;
             }
         }
         for (int i = 0; i < n; i++) {
-            if (suspicious.contains(i) && canRemove)
-                continue;
-            res.add(i);
+            if (!suspicious[i] || !canRemove)
+                res.add(i);
         }
 
         return res;
     }
 
-    private static void dfs (List<List<Integer>> adjList, int[] inDegree, int k, Set<Integer> suspicious) {
-        if (suspicious.contains(k))
+    private static void dfs (List<List<Integer>> adjList, int[] inDegree, int k, boolean[] suspicious) {
+        if (suspicious[k])
             return;
 
-        suspicious.add(k);
+        suspicious[k] = true;
         for (int neighbour : adjList.get(k)) {
             inDegree[neighbour]--;
             dfs(adjList, inDegree, neighbour, suspicious);
