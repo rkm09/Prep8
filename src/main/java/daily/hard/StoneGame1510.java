@@ -7,7 +7,7 @@ public class StoneGame1510 {
 
 //    dp; time: O(NSqrt(N)), space: O(n)
     public static boolean winnerSquareGame(int n) {
-        boolean[] dp = new boolean[n+ 1];
+        boolean[] dp = new boolean[n + 1];
         for (int i = 1; i <= n; i++) {
             for (int k = 1; k * k <= i; k++) {
                 if (!dp[i - k * k]) {
@@ -19,6 +19,30 @@ public class StoneGame1510 {
 
         return dp[n];
     }
+
+//    dp; top down; memoized; time: O(NSqrt(N)), space: O(n)
+    public static boolean winnerSquareGame1(int n) {
+        Boolean[] memo = new Boolean[n + 1];
+        return canWin(n, memo);
+    }
+
+    private static boolean canWin(int remaining, Boolean[] memo) {
+        if (remaining == 0)
+            return false;
+        if (memo[remaining] != null)
+            return memo[remaining];
+
+        for (int k = 1; k * k <= remaining; k++) {
+            if (!canWin(remaining - k * k, memo)) {
+                memo[remaining] = true;
+                return true;
+            }
+        }
+
+        memo[remaining] = false;
+        return false;
+    }
+
 }
 
 /*
