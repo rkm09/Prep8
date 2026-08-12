@@ -9,32 +9,24 @@ public class MissingInteger2996 {
         System.out.println(missingInteger(nums));
     }
 
+//    simulation; time: O(n)
     public static int missingInteger(int[] nums) {
         int n = nums.length;
-        int[] prefSum = new int[n + 1];
         Set<Integer> set = new HashSet<>();
-        int elem = nums[0], maxLen = 1, curr = 1;
-        for (int i = 0; i < n; i++) {
-            prefSum[i + 1] = prefSum[i] + nums[i];
-            set.add(nums[i]);
+        for (int num : nums)
+            set.add(num);
+        int total = nums[0];
+        for (int i = 1; i < n; i++) {
+            if (nums[i] == nums[i - 1] + 1)
+                total += nums[i];
+            else
+                break;
+        }
+        while (set.contains(total)) {
+            total++;
         }
 
-        int left = 0, right = 1;
-        while (left < n) {
-            while (nums[right] == nums[right - 1] + 1) {
-                right++;
-            }
-            curr = right - left;
-            if (maxLen < curr) {
-
-            }
-        }
-
-        while (set.contains(elem)) {
-            elem++;
-        }
-
-        return elem;
+        return total;
     }
 }
 
