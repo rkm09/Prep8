@@ -1,4 +1,4 @@
-package daily.medium;
+package daily.hard;
 
 public class StoneGameV1563 {
     public static void main(String[] args) {
