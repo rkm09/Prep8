@@ -29,8 +29,10 @@ public class NodesBetween2058 {
             prev = curr;
             curr = curr.next;
         }
+//        not enough critical points
         if (nodes.size() < 2)
             return new int[] {-1, -1};
+
         maxDistance = nodes.getLast() - nodes.getFirst();
         for (int j = 1; j < nodes.size(); j++) {
             minDistance = Math.min(minDistance, nodes.get(j) - nodes.get(j - 1));
