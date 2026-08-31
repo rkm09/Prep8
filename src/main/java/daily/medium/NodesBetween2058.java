@@ -13,7 +13,38 @@ public class NodesBetween2058 {
         System.out.println(Arrays.toString(nodesBetweenCriticalPoints(head)));
     }
 
+//    one pass; time: O(n), space: O(1)
     public static int[] nodesBetweenCriticalPoints(ListNode head) {
+        int[] res = {-1, -1};
+        ListNode prev = head;
+        ListNode curr = head.next;
+        int firstCriticalIdx = 0, prevCriticalIdx = 0, currIdx = 1;
+        int minDistance = Integer.MAX_VALUE;
+        while (curr.next != null) {
+            if ((curr.val < prev.val && curr.val < curr.next.val) ||
+                    (curr.val > prev.val && curr.val > curr.next.val)) {
+                if (firstCriticalIdx == 0) {
+                    firstCriticalIdx = currIdx;
+                } else {
+                    minDistance = Math.min(minDistance, currIdx - prevCriticalIdx);
+                }
+                prevCriticalIdx = currIdx;
+            }
+            currIdx++;
+            prev = curr;
+            curr = curr.next;
+        }
+
+        if (minDistance != Integer.MAX_VALUE) {
+            int maxDistance = prevCriticalIdx - firstCriticalIdx;
+            return new int[] {minDistance, maxDistance};
+        }
+
+        return res;
+    }
+
+//   two pass; time: O(n), space: O(n)
+    public static int[] nodesBetweenCriticalPoints1(ListNode head) {
 //        length 1 or 2
         if (head.next == null || head.next.next == null) return new int[] {-1, -1};
         ListNode prev = head;
