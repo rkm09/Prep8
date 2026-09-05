@@ -1,21 +1,26 @@
-package daily.easy;
+package daily.medium;
 
-public class FirstStable3903 {
+public class FirstStable3904 {
     public static void main(String[] args) {
         int[] nums = {5,0,1,4};
         System.out.println(firstStableIndex(nums, 3));
     }
 
-//    simulation; time: O(n^2), space: O(1)
+//    prefix maximum and suffix maximum; time: O(n), space: O(1)
     public static int firstStableIndex(int[] nums, int k) {
-        int n = nums.length;
+        int n = nums.length, max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
+        int[] maxA = new int[n];
+        int[] minA = new int[n];
         for (int i = 0; i < n; i++) {
-            int max = nums[i], min = nums[i];
-            for (int j = 0; j <= i; j++)
-                max = Math.max(max, nums[j]);
-            for (int j = i; j < n; j++)
-                min = Math.min(min, nums[j]);
-            if (max - min <= k)
+            max = Math.max(max, nums[i]);
+            maxA[i] = max;
+        }
+        for (int i = n - 1; i >= 0; i--) {
+            min = Math.min(min, nums[i]);
+            minA[i] = min;
+        }
+        for(int i = 0; i < n; i++) {
+            if (maxA[i] - minA[i] <= k)
                 return i;
         }
 
@@ -55,7 +60,8 @@ Explanation:
 At index 0, the instability score is 0 - 0 = 0, which is less than or equal to k = 0. Therefore, the answer is 0.
 
 Constraints:
-1 <= nums.length <= 100
+1 <= nums.length <= 10^5
 0 <= nums[i] <= 10^9
 0 <= k <= 10^9
  */
+
