@@ -1,4 +1,4 @@
-package dp;
+package dp.easy;
 
 public class ClimbingStairs70 {
     public static void main(String[] args) {
