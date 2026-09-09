@@ -1,16 +1,16 @@
-package daily.easy;
+package daily.medium;
 
-public class CountCommas3870 {
+public class Commas3871 {
     public static void main(String[] args) {
         System.out.println(countCommas(1002));
     }
 
-//    traversing count; time: O(n), space: O(1)
-    public static int countCommas(int n) {
-        int res = 0;
-        if (n < 1000) return 0;
-        for (int a = 1000; a <= n; a++) {
-            res++;
+//    place value contribution; time: O(logN), space: O(1)
+    public static long countCommas(long n) {
+        long p = 1000, res = 0;
+        while (p <= n) {
+            res += n - p + 1;
+            p *= 1000;
         }
 
         return res;
@@ -33,7 +33,6 @@ Input: n = 998
 Output: 0
 Explanation:
 All numbers from 1 to 998 have fewer than four digits. Therefore, no commas are used.
-
 Constraints:
-1 <= n <= 10^5
+1 <= n <= 10^15
  */
