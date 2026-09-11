@@ -3,16 +3,31 @@ package daily.medium;
 import common.TreeNode;
 
 public class AverageSubtree2265 {
+    private int matchingNodeCount;
     public static void main(String[] args) {
 
     }
 
-    public static int averageOfSubtree(TreeNode root) {
-        return 0;
+//    post order dfs (left, right, node); time: O(n), space: O(h) [h - height of tree, worst case: O(n), balanced O(logn)]
+    public int averageOfSubtree(TreeNode root) {
+        dfs(root);
+        return matchingNodeCount;
     }
 
-    private static int dfs(TreeNode root) {
-        return 0;
+//
+    private int[] dfs(TreeNode node) {
+        if (node == null) {
+            return new int[] {0, 0};
+        }
+        int[] left = dfs(node.left);
+        int[] right = dfs(node.right);
+        int currentSum = node.val + left[0] + right[0];
+        int currentCount = 1 + left[1] + right[1];
+
+        if (currentSum / currentCount == node.val)
+            matchingNodeCount++;
+
+        return new int[] {currentSum, currentCount};
     }
 }
 
