@@ -33,4 +33,4 @@ intervals[i].length == 3
 intervals[i] = [li, ri, weighti]
 1 <= li <= ri <= 10^9
 1 <= weighti <= 10^9
- */
+*/
