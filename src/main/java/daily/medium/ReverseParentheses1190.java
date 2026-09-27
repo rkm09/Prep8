@@ -89,3 +89,13 @@ Constraints:
 s only contains lower case English characters and parentheses.
 It is guaranteed that all parentheses are balanced.
  */
+
+/*
+The straight forward approach used the reverse function, causing multiple reversals on the same string and resulting in O(n^2) time complexity.
+To optimize this, we can rethink the problem using the concept of 'wormholes/jumping' for paired parentheses.
+According to Wikipedia, a wormhole can be visualized as a tunnel with two ends at separate points in spacetime
+(i.e., different locations, different points in time, or both).
+The key concept in this approach is treating paired parentheses as 'wormholes'. When encountering a parenthesis,
+we imagine jumping through a wormhole to its match and reversing our direction. This effectively reverses the order
+of characters within each pair of parentheses without actually reversing the string.
+ */
