@@ -6,7 +6,7 @@ import java.util.Deque;
 public class ReverseParentheses1190 {
     public static void main(String[] args) {
         String s = "(u(love)i)";
-        System.out.println(reverseParentheses(s));
+        System.out.println(reverseParentheses1(s));
     }
 
 //    teleportation; time: O(n), space: O(n)
@@ -38,6 +38,7 @@ public class ReverseParentheses1190 {
         return res.toString();
     }
 
+//    simulation; time: O(n^2), space: O(n)
     public static String reverseParentheses1(String s) {
         Deque<Integer> openParenthesesIndices = new ArrayDeque<>();
         int n = s.length();
