@@ -14,11 +14,12 @@ public class ReverseParentheses1190 {
         Deque<Integer> openParenthesesIndices = new ArrayDeque<>();
         int n = s.length();
         int[] pair = new int[n];
+        char[] str = s.toCharArray();
 //        first pass: pair up the parentheses
         for (int i = 0; i < n; i++) {
-            if (s.charAt(i) == '(')
+            if (str[i] == '(')
                 openParenthesesIndices.push(i);
-            else if (s.charAt(i) == ')') {
+            else if (str[i] == ')') {
                 int j = openParenthesesIndices.pop();
                 pair[j] = i;
                 pair[i] = j;
@@ -27,11 +28,11 @@ public class ReverseParentheses1190 {
         StringBuilder res = new StringBuilder();
 //        second pass: build the result string
         for (int currIndex = 0, direction = 1; currIndex < n; currIndex += direction) {
-            if (s.charAt(currIndex) == '(' || s.charAt(currIndex) == ')') {
+            if (str[currIndex] == '(' || str[currIndex] == ')') {
                 currIndex = pair[currIndex];
                 direction = -direction;
             } else {
-                res.append(s.charAt(currIndex));
+                res.append(str[currIndex]);
             }
         }
 
