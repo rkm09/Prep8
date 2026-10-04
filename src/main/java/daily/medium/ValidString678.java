@@ -9,21 +9,25 @@ public class ValidString678 {
         System.out.println(checkValidString(s));
     }
 
+//    two pointer greedy; time: O(n), space: O(n)
     public static boolean checkValidString(String s) {
         int openCount = 0, closeCount = 0;
         int n = s.length();
         char[] chars = s.toCharArray();
         for (int i = 0; i < n; i++) {
+//            traverse from the beginning
             if (chars[i] == '(' || chars[i] == '*')
                 openCount++;
             else
                 openCount--;
 
+//            traverse from the end
             if (chars[n - i - 1] == ')' || chars[n - i - 1] == '*')
                 closeCount++;
             else
                 closeCount--;
 
+//            if at any point, open or close count goes negative, string is invalid
             if (openCount < 0 || closeCount < 0)
                 return false;
         }
@@ -77,4 +81,10 @@ Output: false
 Constraints:
 1 <= s.length <= 100
 s[i] is '(', ')' or '*'.
+ */
+
+
+/*
+We can use a two-pointer greedy approach, which checks the balance between open and closed brackets from both ends of
+the array simultaneously, ensuring that no surplus or deficit of brackets occurs at any point during the iteration.
  */
