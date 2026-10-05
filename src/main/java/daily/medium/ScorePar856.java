@@ -32,6 +32,25 @@ public class ScorePar856 {
 
         return stack.pop();
     }
+
+//    without stack; time: O(n), space: O(1)
+    public static int scoreOfParentheses1(String s) {
+        int score = 0, depth = 0;
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            if (c == '(')
+                depth++;
+            else {
+                depth--;
+//                equivalent to 1 * 2^depth
+                if (s.charAt(i - 1) == '(')
+                    score += 1 << depth;
+            }
+        }
+
+        return score;
+    }
 }
 
 /*
@@ -54,4 +73,14 @@ Constraints:
 2 <= s.length <= 50
 s consists of only '(' and ')'.
 s is a balanced parentheses string.
+ */
+
+
+/*
+String s.  Core () Pairs (0-indexed depth d) Calculation (2d). Total Score
+"()"        1 pair at depth 0                   2^0                 1
+"(())"      1 pair at depth 1                   2^1                 2
+"()()"      2 pairs at depth 0                  2^0 + 2^0       1 + 1 = 2
+"((()))"    1 pair at depth 2                   2^2                 4
+"(()())"    2 pairs at depth 1                  2^1 + 2^1       2 + 2 = 4
  */
