@@ -48,6 +48,7 @@ public class InvalidPar301 {
         for (char c : s.toCharArray()) {
             if (c == '(')
                 count++;
+//            note: there can be letters too, so avoid that by making a conditional else
             else if (c == ')') {
                 count--;
                 if (count < 0)
