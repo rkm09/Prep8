@@ -9,8 +9,25 @@ public class RemoveOuter1021 {
         System.out.println(removeOuterParentheses(s));
     }
 
-//    stack; time: O(n), space: O(n)
+//    time: O(n), space: O(1)
     public static String removeOuterParentheses(String s) {
+        int level = 0, n = s.length();
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            if (c == ')')
+                level--;
+            if (level > 0)
+                res.append(c);
+            if (c == '(')
+                level++;
+        }
+
+        return res.toString();
+    }
+
+//    stack; time: O(n), space: O(n)
+    public static String removeOuterParentheses1(String s) {
         Deque<Character> stack = new ArrayDeque<>();
         StringBuilder res = new StringBuilder();
         int n = s.length();
