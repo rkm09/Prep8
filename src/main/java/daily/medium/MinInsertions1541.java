@@ -12,26 +12,26 @@ public class MinInsertions1541 {
 //    stack; time: O(n), space: O(n)
     public static int minInsertions(String s) {
         Deque<Character> stack = new ArrayDeque<>();
-        int openCount = 0, closeCount = 0;
+        int count = 0;
         int n = s.length();
+        char[] chars = s.toCharArray();
         for (int i = 0; i < n; i++) {
-            char c = s.charAt(i);
-            if (c == '(') {
-                stack.push(c);
+            if (chars[i] == '(') {
+                stack.push(chars[i]);
             }
             else {
                 if (stack.isEmpty())
-                    openCount++;
+                    count++;
                 else
                     stack.pop();
-                if (i + 1 < n && s.charAt(i + 1) == ')')
+                if (i + 1 < n && chars[i + 1] == ')')
                     i++;
                 else
-                    closeCount++;
+                    count++;
             }
         }
 
-        return openCount + closeCount + stack.size() * 2;
+        return count + stack.size() * 2;
     }
 }
 
