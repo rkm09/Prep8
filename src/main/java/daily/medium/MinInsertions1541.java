@@ -5,12 +5,36 @@ import java.util.Deque;
 
 public class MinInsertions1541 {
     public static void main(String[] args) {
-        String s = "(()))";
+        String s = "))())(";
         System.out.println(minInsertions(s));
     }
 
-//    stack; time: O(n), space: O(n)
+//    greedy (without stack); time: O(n), space: O(n)
     public static int minInsertions(String s) {
+        int openCount = 0, n = s.length();
+        int count = 0;
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < n; i++) {
+            if (chars[i] == '(')
+                openCount++;
+            else {
+                if (openCount == 0)
+                    count++;
+                else
+                    openCount--;
+
+                if (i + 1 < n && chars[i + 1] == ')')
+                    i++;
+                else
+                    count++;
+            }
+        }
+
+        return count + openCount * 2;
+    }
+
+//    stack; time: O(n), space: O(n)
+    public static int minInsertions1(String s) {
         Deque<Character> stack = new ArrayDeque<>();
         int count = 0;
         int n = s.length();
