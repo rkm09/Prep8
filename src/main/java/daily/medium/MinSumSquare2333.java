@@ -7,8 +7,43 @@ public class MinSumSquare2333 {
         System.out.println(minSumSquareDiff(nums1,nums2,0,0));
     }
 
+//    greedy; time: O(m + n), space: O(1)
     public static long minSumSquareDiff(int[] nums1, int[] nums2, int k1, int k2) {
-        return 0;
+        int n = nums1.length, maxDiff = 0;
+        long totalBudget = (long) k1 + k2;
+//        frequency array to store the count of each absolute difference
+        int[] count = new int[100001];
+        for (int i = 0; i < n; i++) {
+            int diff = Math.abs(nums1[i] - nums2[i]);
+            count[diff]++;
+            maxDiff = Math.max(maxDiff, diff);
+        }
+
+//        greedily reduce the largest difference from top to bottom
+        for (int i = maxDiff; i > 0; i--) {
+            if (count[i] > 0) {
+                if (totalBudget >= count[i]) {
+//                    we have enough budget to reduce all elements with the difference
+                    totalBudget -= count[i];
+                    count[i - 1] += count[i];
+                    count[i] = 0;
+                } else {
+//                    budget is exhausted; partial reduction for this difference level
+                    count[i] -= (int) totalBudget;
+                    count[i - 1] += (int) totalBudget;
+                    break;
+                }
+            }
+        }
+
+//        compute the final sum of squared differences
+        long minSumSquares = 0;
+        for (int i = 0; i < 100001; i++) {
+            if (count[i] > 0)
+                minSumSquares += (long) i * i * count[i];
+        }
+
+        return minSumSquares;
     }
 }
 
