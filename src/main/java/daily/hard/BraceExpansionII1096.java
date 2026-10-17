@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BraceExpansionII1096 {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         String expr = "{a,b}{c,{d,e}}";
         System.out.println(braceExpansionII(expr));
     }
