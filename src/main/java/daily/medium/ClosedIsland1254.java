@@ -54,6 +54,7 @@ public class ClosedIsland1254 {
         return isClosed;
     }
 
+//    dfs; time: O(m.n), space: O(m.n)
     public static int closedIsland1(int[][] grid) {
         int m = grid.length, n = grid[0].length;
         int count = 0;
