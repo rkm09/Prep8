@@ -1,13 +1,93 @@
 package daily.medium;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class ClosedIsland1254 {
     static void main() {
         int[][] grid = {{0,0,1,0,0},{0,1,0,1,0},{0,1,1,1,0}};
-        System.out.println(closedIsland(grid));
+        int[][] grid1 = {{1,1,0,1,1,1,1,1,1,1},{0,0,1,0,0,1,0,1,1,1},{1,0,1,0,0,0,1,0,1,0},
+                {1,1,1,1,1,0,0,1,0,0},{1,0,1,0,1,1,1,1,1,0},{0,0,0,0,1,1,0,0,0,0},
+                {1,0,1,0,0,0,0,1,1,0},{1,1,0,0,1,1,0,0,0,0},{0,0,0,1,1,0,1,1,1,0},
+                {1,1,0,1,0,1,0,0,1,0}};
+        System.out.println(closedIsland(grid1));
+    }
+
+//    bfs; time: O(m.n), space: O(m.n)
+    public static int closedIsland(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int count = 0;
+        boolean[][] visited = new boolean[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0 && !visited[i][j] && bfs(i, j, m, n, grid, visited))
+                    count++;
+            }
+        }
+
+        return count;
+    }
+
+    private static boolean bfs(int x, int y, int m, int n, int[][] grid, boolean[][] visited) {
+        Deque<int[]> queue = new ArrayDeque<>();
+        queue.offer(new int[]{x, y});
+        visited[x][y] = true;
+        boolean isClosed = true;
+        int[][] dir = {{0,-1}, {0, 1},{-1, 0},{1, 0}};
+        while (!queue.isEmpty()) {
+            int[] temp = queue.poll();
+            x = temp[0];
+            y = temp[1];
+            for (int i = 0; i < 4; i++) {
+                int r = x + dir[i][0];
+                int c = y + dir[i][1];
+//                (x, y) is a boundary cell
+                if (r < 0 || r == m || c < 0 || c == n)
+                    isClosed = false;
+                else if (grid[r][c] == 0 && !visited[r][c]){
+                    visited[r][c] = true;
+                    queue.offer(new int[] {r, c});
+                }
+            }
+        }
+
+        return isClosed;
+    }
+
+    public static int closedIsland1(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int count = 0;
+        boolean[][] visited = new boolean[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0 && !visited[i][j] && dfs(i, j, m, n, grid, visited))
+                    count++;
+            }
+        }
+
+        return count;
+    }
+
+    private static boolean dfs(int x, int y, int m, int n, int[][] grid, boolean[][] visited) {
+        if (x < 0 || x == m || y < 0 || y == n)
+            return false;
+        if (grid[x][y] == 1 || visited[x][y])
+            return true;
+        visited[x][y] = true;
+        int[][] dir = {{0,-1},{-1,0},{0,1},{1,0}};
+        boolean isClosed = true;
+        for (int i = 0; i < 4; i++) {
+            int r = x + dir[i][0];
+            int c = y + dir[i][1];
+            if (!dfs(r, c, m, n, grid, visited))
+                isClosed = false;
+        }
+
+        return isClosed;
     }
 
 //    union find; time: O(m.n.alpha(m)), space: O(m.n)
-    public static int closedIsland(int[][] grid) {
+    public static int closedIsland2(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
         UnionFind dsu = new UnionFind(m * n + 1);
