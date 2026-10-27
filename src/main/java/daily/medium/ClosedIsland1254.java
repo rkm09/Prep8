@@ -10,7 +10,7 @@ public class ClosedIsland1254 {
                 {1,1,1,1,1,0,0,1,0,0},{1,0,1,0,1,1,1,1,1,0},{0,0,0,0,1,1,0,0,0,0},
                 {1,0,1,0,0,0,0,1,1,0},{1,1,0,0,1,1,0,0,0,0},{0,0,0,1,1,0,1,1,1,0},
                 {1,1,0,1,0,1,0,0,1,0}};
-        System.out.println(closedIsland(grid1));
+        System.out.println(closedIsland2(grid1));
     }
 
 //    bfs; time: O(m.n), space: O(m.n)
