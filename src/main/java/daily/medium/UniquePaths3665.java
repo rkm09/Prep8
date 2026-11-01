@@ -1,37 +1,56 @@
 package daily.medium;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 public class UniquePaths3665 {
     private static final int MOD = 1_000_000_007;
     static void main() {
+        UniquePaths3665 u = new UniquePaths3665();
         int[][] grid = {{0,1,0},{0,0,1},{1,0,0}};
-        System.out.println(uniquePaths(grid));
+        System.out.println(u.uniquePaths(grid));
     }
 
-    public static int uniquePaths(int[][] grid) {
+//    dp + dfs; time: O(m.n), space: O(m.n)
+    public int uniquePaths(int[][] grid) {
         int m = grid.length, n = grid[0].length;
-        Deque<int[]> queue = new ArrayDeque<>();
-        queue.offer(new int[] {0,0});
-        boolean[][] visited = new boolean[m][n];
-        visited[0][0] = true;
-        int count = 0;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            int[] cell = queue.poll();
-            int row = cell[0], col = cell[1];
-            if (row == m - 1 && col == n - 1)
-                return count;
-            int nextRow = row + 1, nextCol = col + 1;
-            if (nextRow < m) {
-                if (grid[nextRow][col] == 0)
-                    queue.offer(new int[] {nextRow, col});
+        Integer[][] memo = new Integer[m][n];
+        return dfs(0, 0, m, n, grid, memo);
+    }
 
+    private int dfs(int r, int c, int m, int n, int[][] grid, Integer[][] memo) {
+        if (r == m - 1 && c == n - 1)
+            return 1;
+        if (memo[r][c] != null)
+            return memo[r][c];
+        long totalPaths = 0;
+//        Try moving right (starting direction 0 = moving right)
+        int[] rightNext = simulate(grid, r, c + 1, m, n, 0);
+        if (rightNext != null)
+            totalPaths = (totalPaths + dfs(rightNext[0], rightNext[1], m, n, grid, memo)) % MOD;
+//        Try moving down (starting direction 1 = moving down)
+        int[] downNext = simulate(grid, r + 1, c, m, n, 1);
+        if (downNext != null)
+            totalPaths = (totalPaths + dfs(downNext[0], downNext[1], m, n, grid, memo)) % MOD;
+
+        return memo[r][c] = (int) totalPaths;
+    }
+
+//    Unified simulation helper: handles chain reaction reflections for both directions
+//    dir 0 = moving right, 1 = moving down
+    private int[] simulate(int[][] grid, int r, int c, int m, int n, int dir) {
+        int currR = r, currC = c;
+        while (true) {
+            if (currR < 0 || currR >= m || currC < 0 || currC >= n)
+                return null;  // out of bounds
+            if (grid[currR][currC] == 0)
+                return new int[] {currR, currC};  // landed on an empty cell
+//            hit a mirror (grid[currR][currC] == 1), reflect based on entry direction
+            if (dir == 0) {
+                currR++;
+                dir = 1; // turned down
+            } else {
+                currC++;
+                dir = 0;  // turned right
             }
         }
-
-        return count;
     }
 }
 
