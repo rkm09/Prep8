@@ -104,3 +104,30 @@ n == grid[i].length
 grid[i][j] is either 0 or 1.
 grid[0][0] == grid[m - 1][n - 1] == 0
  */
+
+
+/*
+This is one of those classic problems where Top-Down DP (DFS + Memoization) is fundamentally a much cleaner fit than a
+bottom-up or BFS-based approach.
+There are a few key reasons why top-down wins so decisively here:
+1. Lazy Evaluation vs. Exhaustive ReachabilityTop-Down (DFS):
+You start at the source (0, 0) and naturally demand only the subproblems you actually need to reach the target
+(m-1, n-1). If certain regions of the grid are walled off by mirrors and never touched, DFS ignores them completely
+without any extra overhead.
+Bottom-Up / BFS:
+To do it properly via BFS or topological ordering, you first have to discover every single reachable node in the graph,
+compute their in-degrees, and manage dependencies. That introduces a massive amount of bookkeeping.
+
+2. Handling Irregular Transitions (Reflections):
+In a standard grid problem, moves are strictly adjacent (r+1 or c+1), making bottom-up array filling
+(dp[i][j] = dp[i-1][j] + dp[i][j-1]) trivial.
+Because mirror reflections can skip cells and jump around irregularly, the "next states" aren't neatly adjacent.
+Top-down recursion handles these arbitrary forward jumps seamlessly:
+you just simulate the jump, get the destination coordinates, and recursively ask for its answer.
+
+3. Direct Mapping to the Mathematical Definition:
+Top-down DP mirrors the exact recurrence relation of the problem statement:
+{Ways}(r, c) = {Ways}({SimulateRight}(r, c)) + {Ways}({SimulateDown}(r, c))
+When the graph transitions are complex and non-uniform like this, recursion with memoization acts like a natural
+"telescope" — allowing you to look forward, resolve the jump, and cache the result effortlessly.
+ */
