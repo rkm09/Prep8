@@ -8,7 +8,7 @@ public class UniquePaths3665 {
         System.out.println(u.uniquePaths(grid));
     }
 
-//    dp + dfs; time: O(m.n), space: O(m.n)
+//    dp (dfs + memoization); time: O(m.n), space: O(m.n)
     public int uniquePaths(int[][] grid) {
         int m = grid.length, n = grid[0].length;
         Integer[][] memo = new Integer[m][n];
