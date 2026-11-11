@@ -18,7 +18,7 @@ Increase or decrease any element of nums by 1.
 Return the minimum number of operations needed to have at least k non-overlapping subarrays of size exactly x in nums,
 where all elements within each subarray are equal.
 Example 1:
-Input: nums = [5,-2,1,3,7,3,6,4,-1], x = 3, k = 2
+Input: nums = [5,-2,1,3,7,3,6,4,-1], x = 3, k =
 Output: 8
 Explanation:
 Use 3 operations to add 3 to nums[1] and use 2 operations to subtract 2 from nums[3].
