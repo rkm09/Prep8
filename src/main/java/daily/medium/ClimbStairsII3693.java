@@ -6,8 +6,18 @@ public class ClimbStairsII3693 {
         System.out.println(climbStairs(4, costs));
     }
 
+//    dp; time: O(n), space: O(1)
     public static int climbStairs(int n, int[] costs) {
-        return 0;
+        int a = 0, b = 0, c = 0;
+        for (int i = 0; i < n; i++) {
+            int next = Math.min(Math.min(a + 9, b + 4), c + 1)
+                     + costs[i];
+            a = b;
+            b = c;
+            c = next;
+        }
+
+        return c;
     }
 }
 
@@ -46,4 +56,18 @@ The optimal path is 0 → 3 with total cost = costs[3] + (3 - 0)2 = 3 + 9 = 12
 Constraints:
 1 <= n == costs.length <= 10^5
 1 <= costs[i] <= 10^4
+ */
+
+
+/*
+Let f[i] be the minimum total cost to reach step i. Initially, we are on step 0 with a total cost of 0, so f[0]=0.
+To reach step i (i≥1), the last jump can only start from step i−1, i−2, or i−3. The jump distances are 1, 2, and 3,
+respectively, with squared costs of 1^2=1, 2^2=4, and 3^2=9. We also need to pay the cost costs[i] of step i (where
+costs is 1-indexed as defined in the problem). Taking the minimum over all valid preceding steps gives the transition:
+f[i]=min(f[i−1]+1, f[i−2]+4, f[i−3]+9)+costs[i]
+When i<3, some starting steps do not exist, so we ignore the corresponding terms. The final answer is f[n].
+Computing this recurrence directly requires O(n) space for the array f. Notice that f[i] depends only on f[i−1],
+f[i−2], and f[i−3]; earlier states are never used again. Therefore, we can keep only the three most recent states in
+three rolling variables, shifting them by one position whenever we compute a new state. This reduces the space
+complexity to O(1).
  */
