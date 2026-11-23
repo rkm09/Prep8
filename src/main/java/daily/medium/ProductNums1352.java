@@ -19,6 +19,7 @@ class ProductOfNumbers {
 
     public void add(int num) {
        if (num == 0) {
+//           invalidate the whole
            prefixProd = new ArrayList<>();
            prefixProd.add(1);
            size = 0;
@@ -30,6 +31,7 @@ class ProductOfNumbers {
     }
 
     public int getProduct(int k) {
+//        if there was a num = 0 in between, k might be larger
         if (k > size) return 0;
         return prefixProd.get(size) / prefixProd.get(size - k);
     }
