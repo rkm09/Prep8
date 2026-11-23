@@ -21,6 +21,7 @@ class ProductOfNumbers {
        if (num == 0) {
 //           invalidate the whole
            prefixProd = new ArrayList<>();
+//           initialize product
            prefixProd.add(1);
            size = 0;
        } else {
