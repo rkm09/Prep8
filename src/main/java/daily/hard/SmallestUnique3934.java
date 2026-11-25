@@ -9,6 +9,7 @@ public class SmallestUnique3934 {
         System.out.println(smallestUniqueSubarray(nums));
     }
 
+//    rolling hash and binary search on answer; time: O(NlogN), space: O(N)
     public static int smallestUniqueSubarray(int[] nums) {
         final long MOD = 1000000007L;
         final long BASE = 911382323L;
@@ -123,4 +124,13 @@ i modM, we can extract the hash of any contiguous subarray nums[l…r−1] of le
 H(nums[l…r−1])=(h[r]−h[l]⋅p[k]modM+M)modM.
 Binary search the subarray length, then use rolling hash to calculate the hashes of equal-length subarrays from left to right. Store these hashes in an ordinary hash table and check whether any subarray occurs exactly once.
 Note: The test data for this problem does not require double hashing to prevent collisions.
+
+Let n be the length of nums.
+Time complexity: O(nlogn).
+Precomputing prefix hashes takes O(n) time. Binary search considers O(logn) lengths. Each check examines at most n
+subarrays, computing each hash in O(1) time and counting occurrences with a hash table. Each check therefore takes
+O(n) time, giving O(nlogn) overall.
+Space complexity: O(n).
+The prefix hash and base-power arrays each require O(n) space. The hash table used by each check stores at most
+O(n) values.
  */
