@@ -25,8 +25,7 @@ public class SmallestUnique3934 {
             p[i + 1] = (p[i] * BASE) % MOD;
         }
 
-        int lo = 1,
-                hi = n;
+        int lo = 1, hi = n;
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
             if (check(mid, n, h, p, MOD)) {
